@@ -28,7 +28,7 @@ public class TestJobAlarmConfigService extends TestRun {
         alarmTypeEnumList.add(AlarmTypeEnum.DINGDING);
         alarmTypeEnumList.add(AlarmTypeEnum.CALLBACK_URL);
 
-        jobAlarmConfigService.upSertBatchJobAlarmConfig(alarmTypeEnumList, 1L);
+        jobAlarmConfigService.upSetBatchJobAlarmConfig(alarmTypeEnumList, 1L);
     }
 
 
