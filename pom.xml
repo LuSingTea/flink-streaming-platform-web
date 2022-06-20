@@ -13,7 +13,7 @@
         <module>flink-streaming-web</module>
         <module>flink-streaming-core</module>
         <module>deployer</module>
-        <module>flink-streaming-commom</module>
+        <module>flink-streaming-common</module>
         <module>flink-streaming-validation</module>
         <module>flink-streaming-web-config</module>
         <module>flink-streaming-web-common</module>
@@ -26,7 +26,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.8.RELEASE</version>
+        <version>2.7.0</version>
     </parent>
 
 
@@ -40,7 +40,7 @@
         <flink_streaming_version>1.4.0.RELEASE</flink_streaming_version>
         <flink.version>1.14.4</flink.version>
         <scala.binary.version>2.11</scala.binary.version>
-        <spring.boot.version>2.2.8.RELEASE</spring.boot.version>
+        <spring.boot.version>2.7.0</spring.boot.version>
     </properties>
 
     <dependencyManagement>
@@ -98,7 +98,7 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.47</version>
+                <version>8.0.29</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>

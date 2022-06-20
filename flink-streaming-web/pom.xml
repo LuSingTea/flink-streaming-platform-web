@@ -9,12 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.streaming.platform.web</groupId>
     <artifactId>flink-streaming-web</artifactId>
     <version>1.4.0.RELEASE</version>
 
 	<properties>
-		<nacos.config.version>0.2.7</nacos.config.version>
+		<nacos.config.version>0.2.10</nacos.config.version>
 	</properties>
 
     <dependencies>
@@ -71,21 +70,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.13</version>
+            <version>1.4.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
+            <version>1.2.11</version>
         </dependency>
         <!-- springboot 全家桶 end -->
 
@@ -132,13 +125,11 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.2</version>
-		</dependency>
+        </dependency>
 		
 		<dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
-            <version>4.5.2</version>
         </dependency>
 
         <dependency>
@@ -155,7 +146,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.2.8.RELEASE</version>
                 <configuration>
                     <mainClass>com.flink.streaming.web.StartApplication</mainClass>
                 </configuration>
@@ -167,7 +157,6 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -176,10 +165,7 @@
                     <target>8</target>
                 </configuration>
             </plugin>
-
         </plugins>
-
-
     </build>
 
 </project>
