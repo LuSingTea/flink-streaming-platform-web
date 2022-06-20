@@ -38,7 +38,7 @@
         <java_target_version>1.8</java_target_version>
         <file_encoding>UTF-8</file_encoding>
         <flink_streaming_version>1.4.0.RELEASE</flink_streaming_version>
-        <flink.version>1.14.3</flink.version>
+        <flink.version>1.14.4</flink.version>
         <scala.binary.version>2.11</scala.binary.version>
         <spring.boot.version>2.2.8.RELEASE</spring.boot.version>
     </properties>
@@ -77,18 +77,18 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.12</version>
+                <version>4.13.2</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.20</version>
+                <version>1.18.24</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.5</version>
+                <version>3.12.0</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -113,7 +113,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.72</version>
+                <version>1.2.83</version>
             </dependency>
             <dependency>
                 <groupId>commons-cli</groupId>
@@ -123,7 +123,7 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.2.2</version>
+                <version>42.3.3</version>
             </dependency>
 
 

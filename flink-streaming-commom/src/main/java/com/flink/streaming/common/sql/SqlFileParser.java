@@ -4,7 +4,7 @@ package com.flink.streaming.common.sql;
 import com.flink.streaming.common.constant.SystemConstant;
 import com.flink.streaming.common.enums.SqlCommand;
 import com.flink.streaming.common.model.SqlCommandCall;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -105,7 +105,7 @@ public class SqlFileParser {
         }
         final char[] value = str.toCharArray();
 
-        int start = 0, last = 0 + str.length() - 1;
+        int start = 0, last = str.length() - 1;
         int end = last;
         while ((start <= end) && (value[start] <= ' ')) {
             start++;
