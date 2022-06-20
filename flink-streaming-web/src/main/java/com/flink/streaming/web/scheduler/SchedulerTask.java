@@ -78,26 +78,26 @@ public class SchedulerTask {
     }
 
 
-//    /**
-//     * 每隔20分钟进行一次对停止任务进行是否在yarn上运行的检查
-//     *
-//     * @author zhuhuipei
-//     * @date 2020-10-25
-//     * @time 18:34
-//     */
-//    @Async("taskExecutor")
-//    @Scheduled(cron = "0 */20 * * * ?")
-//    public void checkYarnJobByStop() {
-//        if (!ipStatusService.isLeader()) {
-//            return;
-//        }
-//        log.info("#####checkYarnJobByStop#######");
-//        try {
-//            taskServiceAO.checkYarnJobByStop();
-//        } catch (Exception e) {
-//            log.error("checkYarnJobByStop is error", e);
-//        }
-//    }
+    // /**
+    //  * 每隔20分钟进行一次对停止任务进行是否在yarn上运行的检查
+    //  *
+    //  * @author zhuhuipei
+    //  * @date 2020-10-25
+    //  * @time 18:34
+    //  */
+    // @Async("taskExecutor")
+    // @Scheduled(cron = "0 */20 * * * ?")
+    // public void checkYarnJobByStop() {
+    //     if (!ipStatusService.isLeader()) {
+    //         return;
+    //     }
+    //     log.info("#####checkYarnJobByStop#######");
+    //     try {
+    //         taskServiceAO.checkYarnJobByStop();
+    //     } catch (Exception e) {
+    //         log.error("checkYarnJobByStop is error", e);
+    //     }
+    // }
 
 
     /**
@@ -109,9 +109,9 @@ public class SchedulerTask {
      */
     @Async("taskExecutor")
     @Scheduled(cron = "0 0 */1 * * ?")
-  //@Scheduled(cron = "0 */1 * * * ?")
+    // @Scheduled(cron = "0 */1 * * * ?")
     public void autoSavePoint() {
-        if (!systemConfigService.autoSavepoint()){
+        if (!systemConfigService.autoSavepoint()) {
             log.info("#####没有开启自动savePoint#######");
             return;
         }

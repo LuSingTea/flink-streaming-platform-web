@@ -62,13 +62,13 @@ public class CheckPointParams {
 
         checkPointParam.setCheckpointingMode(checkpointingMode);
         if (StringUtils.isNotEmpty(checkpointInterval)) {
-            checkPointParam.setCheckpointInterval(Long.valueOf(checkpointInterval));
+            checkPointParam.setCheckpointInterval(Long.parseLong(checkpointInterval));
         }
         if (StringUtils.isNotEmpty(checkpointTimeout)) {
-            checkPointParam.setCheckpointTimeout(Long.valueOf(checkpointTimeout));
+            checkPointParam.setCheckpointTimeout(Long.parseLong(checkpointTimeout));
         }
         if (StringUtils.isNotEmpty(tolerableCheckpointFailureNumber)) {
-            checkPointParam.setTolerableCheckpointFailureNumber(Integer.valueOf(tolerableCheckpointFailureNumber));
+            checkPointParam.setTolerableCheckpointFailureNumber(Integer.parseInt(tolerableCheckpointFailureNumber));
         }
         if (StringUtils.isNotEmpty(externalizedCheckpointCleanup)) {
             checkPointParam.setExternalizedCheckpointCleanup(externalizedCheckpointCleanup);

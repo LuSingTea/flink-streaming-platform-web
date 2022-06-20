@@ -45,7 +45,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    if (res.code && res.code == 401) {
+    if (res.code && res.code === 401) {
       MessageBox.confirm('您的会话已失效, 请重新登录！', '确认退出', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

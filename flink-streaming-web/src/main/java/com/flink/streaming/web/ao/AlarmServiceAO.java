@@ -27,5 +27,5 @@ public interface AlarmServiceAO {
      * @date 2021/2/21
      * @time 11:31
      */
-    boolean sendForHttp(String url,CallbackDTO callbackDTO);
+    boolean sendForHttp(String url, CallbackDTO callbackDTO);
 }

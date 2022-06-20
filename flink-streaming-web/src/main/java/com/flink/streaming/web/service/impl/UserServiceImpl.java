@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     public PageModel<UserDTO> queryAllByPage(PageParam pageparam) {
         PageHelper.startPage(pageparam.getPageNum(), pageparam.getPageSize(), YN.Y.getCode());
         Page<User> users = userMapper.queryAllByPage(pageparam);
-        PageModel<UserDTO> pageModel = new PageModel<UserDTO>();
+        PageModel<UserDTO> pageModel = new PageModel<>();
         pageModel.setPageNum(users.getPageNum());
         pageModel.setPages(users.getPages());
         pageModel.setPageSize(users.getPageSize());

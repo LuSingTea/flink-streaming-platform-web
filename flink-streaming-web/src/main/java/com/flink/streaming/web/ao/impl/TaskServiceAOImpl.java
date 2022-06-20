@@ -254,12 +254,7 @@ public class TaskServiceAOImpl implements TaskServiceAO {
      */
     private void alermAndAutoJob(List<AlarmTypeEnum> alarmTypeEnumList, String cusContent,
                                  JobConfigDTO jobConfigDTO, DeployModeEnum deployModeEnum) {
-        threadPoolExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                dingDingService.doAlarmNotify(cusContent, jobConfigDTO, deployModeEnum);
-            }
-        });
+        threadPoolExecutor.execute(() -> dingDingService.doAlarmNotify(cusContent, jobConfigDTO, deployModeEnum));
         if (CollectionUtils.isEmpty(alarmTypeEnumList)) {
             log.warn("任务[{}-{}]没有配置告警，无法进行告警，并且任务将会被停止！！！", jobConfigDTO.getId(), jobConfigDTO.getJobName());
             return;
@@ -302,12 +297,12 @@ public class TaskServiceAOImpl implements TaskServiceAO {
      * @time 19:56
      */
     private void dingdingAlarm(String content, Long jobConfigId) {
-        String alartUrl = systemConfigService.getSystemConfigByKey(SysConfigEnum.DINGDING_ALARM_URL.getKey());
-        if (StringUtils.isEmpty(alartUrl)) {
+        String alertUrl = systemConfigService.getSystemConfigByKey(SysConfigEnum.DINGDING_ALARM_URL.getKey());
+        if (StringUtils.isEmpty(alertUrl)) {
             log.warn("##### 钉钉告警url没有设置，任务[{}]无法告警 #####", jobConfigId);
             return;
         }
-        threadPoolExecutor.execute(new AlarmDingdingThread(alarmServiceAO, content, jobConfigId, alartUrl));
+        threadPoolExecutor.execute(new AlarmDingdingThread(alarmServiceAO, content, jobConfigId, alertUrl));
     }
 
     /**
@@ -318,11 +313,11 @@ public class TaskServiceAOImpl implements TaskServiceAO {
      * @time 19:56
      */
     private void httpAlarm(CallbackDTO callbackDTO) {
-        String alartUrl = systemConfigService.getSystemConfigByKey(SysConfigEnum.CALLBACK_ALARM_URL.getKey());
-        if (StringUtils.isEmpty(alartUrl)) {
+        String alertUrl = systemConfigService.getSystemConfigByKey(SysConfigEnum.CALLBACK_ALARM_URL.getKey());
+        if (StringUtils.isEmpty(alertUrl)) {
             log.warn("##### 回调告警url没有设置，任务[{}]无法告警 #####", callbackDTO.getJobConfigId());
             return;
         }
-        threadPoolExecutor.execute(new AlarmHttpThread(alarmServiceAO, callbackDTO, alartUrl));
+        threadPoolExecutor.execute(new AlarmHttpThread(alarmServiceAO, callbackDTO, alertUrl));
     }
 }

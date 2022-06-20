@@ -54,7 +54,7 @@ public class JobConfigHistoryServiceImpl implements JobConfigHistoryService {
         if (page == null) {
             return null;
         }
-        PageModel<JobConfigHistoryDTO> pageModel = new PageModel<JobConfigHistoryDTO>();
+        PageModel<JobConfigHistoryDTO> pageModel = new PageModel<>();
         pageModel.setPageNum(page.getPageNum());
         pageModel.setPages(page.getPages());
         pageModel.setPageSize(page.getPageSize());

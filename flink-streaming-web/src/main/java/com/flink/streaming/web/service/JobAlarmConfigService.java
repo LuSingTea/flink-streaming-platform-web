@@ -20,7 +20,7 @@ public interface JobAlarmConfigService {
      * @date 2021/2/27
      * @time 17:49
      */
-    void upSertBatchJobAlarmConfig(List<AlarmTypeEnum> alarmTypeEnumList, Long jobId);
+    void upSetBatchJobAlarmConfig(List<AlarmTypeEnum> alarmTypeEnumList, Long jobId);
 
 
     /**

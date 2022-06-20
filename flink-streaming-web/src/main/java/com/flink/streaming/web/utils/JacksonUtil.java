@@ -6,6 +6,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.fasterxml.jackson.core.json.JsonReadFeature;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -32,7 +33,7 @@ import com.fasterxml.jackson.databind.node.TextNode;
  */
 public class JacksonUtil {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     /**
      * 对象转换成Json字符串
@@ -127,7 +128,7 @@ public class JacksonUtil {
     /**
      * pojo对象转换成JsonNode
      * 
-     * @param json
+     * @param pojo
      * @return
      * @throws JsonProcessingException
      * @throws IOException
@@ -164,7 +165,6 @@ public class JacksonUtil {
      * JsonNode指定转换成对象
      * 
      * @param json
-     * @param paramname
      * @param clazz
      * @return
      * @throws JsonProcessingException
@@ -210,9 +210,7 @@ public class JacksonUtil {
         }
         Class<?> parametrized = clazz[0];
         Class<?>[] parameterClasses = new Class[clazz.length - 1];
-        for (int i = 1; i < clazz.length; i++) {
-            parameterClasses[i - 1] = clazz[i];
-        }
+        System.arraycopy(clazz, 1, parameterClasses, 0, clazz.length - 1);
         JavaType javatype = mapper.getTypeFactory().constructParametricType(parametrized, parameterClasses);
         return mapper.readValue(json, javatype);
     }
@@ -277,7 +275,7 @@ public class JacksonUtil {
                 return null;
             }
             if (StringUtils.isNumeric(source)) {
-                return new Date(Long.valueOf(source));
+                return new Date(Long.parseLong(source));
             } else if (source.length() <= 10) {
                 SimpleDateFormat format_date = new SimpleDateFormat("yyyy-MM-dd");
                 return format_date.parse(source, pos);
@@ -306,7 +304,7 @@ public class JacksonUtil {
                 _parseDate = super._parseDate(jp, ctxt);
             } catch (Exception ex) {
                 String dateStr = jp.getText().trim();
-                _parseDate = new Date(Long.valueOf(dateStr));
+                _parseDate = new Date(Long.parseLong(dateStr));
             }
             return _parseDate;
         }

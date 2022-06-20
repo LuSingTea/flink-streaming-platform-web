@@ -34,7 +34,7 @@ public class JobAlarmConfigServiceImpl implements JobAlarmConfigService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void upSertBatchJobAlarmConfig(List<AlarmTypeEnum> alarmTypeEnumList, Long jobId) {
+    public void upSetBatchJobAlarmConfig(List<AlarmTypeEnum> alarmTypeEnumList, Long jobId) {
         if (jobId == null) {
             throw new BizException(SysErrorEnum.JOB_CONFIG_PARAM_IS_NULL);
         }

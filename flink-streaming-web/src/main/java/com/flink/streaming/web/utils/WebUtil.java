@@ -39,7 +39,7 @@ public class WebUtil {
      * @version V1.0
      */
     public static void restResponse(HttpServletResponse response, String status, String message) {
-        RestResult<Object> respone = RestResult.newInstance(status, message, null);
+        RestResult respone = RestResult.newInstance(status, message, null);
         restResponse(response, respone);
     }
 
@@ -70,7 +70,7 @@ public class WebUtil {
      * @version V1.0
      */
     public static void restResponse(HttpServletResponse response, String status, String message, Object data) {
-        RestResult<Object> respone = RestResult.newInstance(status, message, data);
+        RestResult respone = RestResult.newInstance(status, message, data);
         restResponse(response, respone);
     }
     

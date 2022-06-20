@@ -88,7 +88,7 @@ public class HttpClientToolUtils {
             }
         };
 
-        sc.init(null, new TrustManager[] { trustManager }, null);
+        sc.init(null, new TrustManager[]{trustManager}, null);
         return sc;
     }
 
@@ -108,20 +108,13 @@ public class HttpClientToolUtils {
     /**
      * 模拟请求
      *
-     * @param url
-     *            资源地址
-     * @param paramMap
-     *            参数列表
-     * @param headMap
-     *            请求头列表
-     * @param body
-     *            请求body
-     * @param mimeType
-     *            MIME type
-     * @param charset
-     *            编码
-     * @param connectTimeout
-     *            超时时间
+     * @param url            资源地址
+     * @param paramMap       参数列表
+     * @param headMap        请求头列表
+     * @param body           请求body
+     * @param mimeType       MIME type
+     * @param charset        编码
+     * @param connectTimeout 超时时间
      * @return
      * @throws NoSuchAlgorithmException
      * @throws KeyManagementException
@@ -130,7 +123,7 @@ public class HttpClientToolUtils {
      */
 
     public static String doPost(String url, Map<String, String> paramMap, Map<String, String> headMap, String body, String mimeType, String charset,
-            int connectTimeout) throws IOException {
+                                int connectTimeout) throws IOException {
         if (StringUtils.isBlank(charset)) {
             charset = "utf=8";
         }
@@ -144,7 +137,7 @@ public class HttpClientToolUtils {
             return null;
         }
         // 设置协议http和https对应的处理socket链接工厂的对象
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.INSTANCE).register("https", new SSLConnectionSocketFactory(sslcontext)).build();
         PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
         // HttpClients.custom().setConnectionManager(connManager);
@@ -231,7 +224,7 @@ public class HttpClientToolUtils {
     }
 
     public static String doGet(String url, Map<String, String> paramMap, Map<String, String> headMap, String charset, int connectTimeout,
-            String cookieSpec) throws IOException {
+                               String cookieSpec) throws IOException {
         String result = "";
         // 采用绕过验证的方式处理https请求
         SSLContext sslcontext = null;
@@ -243,7 +236,7 @@ public class HttpClientToolUtils {
         }
 
         // 设置协议http和https对应的处理socket链接工厂的对象
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.INSTANCE).register("https", new SSLConnectionSocketFactory(sslcontext)).build();
         PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
         // HttpClients.custom().setConnectionManager(connManager);
@@ -325,7 +318,7 @@ public class HttpClientToolUtils {
     }
 
     public static Map<String, Object> doGetFull(String url, Map<String, String> paramMap, Map<String, String> headMap, String charset,
-            int connectTimeout) throws IOException {
+                                                int connectTimeout) throws IOException {
         charset = StringUtils.isBlank(charset) ? "utf-8" : charset;
         Map<String, Object> retMap = new HashMap<String, Object>();
         String result = "";
@@ -339,7 +332,7 @@ public class HttpClientToolUtils {
         }
 
         // 设置协议http和https对应的处理socket链接工厂的对象
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.INSTANCE).register("https", new SSLConnectionSocketFactory(sslcontext)).build();
         PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
         // HttpClients.custom().setConnectionManager(connManager);
@@ -416,12 +409,12 @@ public class HttpClientToolUtils {
     }
 
     public static Map<String, Object> doPostFull(String url, Map<String, String> paramMap, Map<String, String> headMap, String body, String mimeType,
-            String charset) throws IOException {
+                                                 String charset) throws IOException {
         return doPostFull(url, paramMap, headMap, body, mimeType, charset, 0);
     }
 
     public static Map<String, Object> doPostFull(String url, Map<String, String> paramMap, Map<String, String> headMap, String body, String mimeType,
-            String charset, int connectTimeout, String cookieSpec) throws IOException {
+                                                 String charset, int connectTimeout, String cookieSpec) throws IOException {
         charset = StringUtils.isBlank(charset) ? "utf-8" : charset;
         Map<String, Object> retMap = new HashMap<String, Object>();
         String result = "";
@@ -435,7 +428,7 @@ public class HttpClientToolUtils {
         }
 
         // 设置协议http和https对应的处理socket链接工厂的对象
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
                 .register("http", PlainConnectionSocketFactory.INSTANCE).register("https", new SSLConnectionSocketFactory(sslcontext)).build();
         PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
         // HttpClients.custom().setConnectionManager(connManager);
@@ -515,7 +508,7 @@ public class HttpClientToolUtils {
     }
 
     public static Map<String, Object> doPostFull(String url, Map<String, String> paramMap, Map<String, String> headMap, String body, String mimeType,
-            String charset, int connectTimeout) throws IOException {
+                                                 String charset, int connectTimeout) throws IOException {
         return doPostFull(url, paramMap, headMap, body, mimeType, charset, connectTimeout, null);
     }
 
@@ -538,7 +531,7 @@ public class HttpClientToolUtils {
                 }
             };
             SSLContext ctx = SSLContext.getInstance("SSL");
-            ctx.init(null, new TrustManager[] { xtm }, null);
+            ctx.init(null, new TrustManager[]{xtm}, null);
             sslsf = new SSLConnectionSocketFactory(ctx, new X509HostnameVerifier() {
                 @Override
                 public boolean verify(String arg0, SSLSession arg1) {
@@ -606,7 +599,7 @@ public class HttpClientToolUtils {
     /**
      * 创建cookie字符串
      *
-     * @param cookiemap
+     * @param cookies
      * @return
      * @author 文香炯
      * @date 2018年1月10日 下午5:09:58
@@ -636,7 +629,7 @@ public class HttpClientToolUtils {
         if (cookies == null) {
             return null;
         }
-        Map<String, Cookie> map = new HashMap<String, Cookie>();
+        Map<String, Cookie> map = new HashMap<>();
         for (Cookie cookie : cookies) {
             map.put(cookie.getName(), cookie);
         }
@@ -656,7 +649,7 @@ public class HttpClientToolUtils {
         if (cookies == null) {
             return null;
         }
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         for (Cookie cookie : cookies.values()) {
             map.put(cookie.getName(), cookie.getValue());
         }
@@ -686,7 +679,7 @@ public class HttpClientToolUtils {
     /**
      * 根据cookie map创建cookie列表
      *
-     * @param cookies
+     * @param cookiemap
      * @return
      * @author 文香炯
      * @date 2018年1月12日 上午11:07:18
@@ -696,10 +689,7 @@ public class HttpClientToolUtils {
         if (cookiemap == null) {
             return null;
         }
-        List<Cookie> cookies = new ArrayList<Cookie>();
-        for (Cookie cookie : cookiemap.values()) {
-            cookies.add(cookie);
-        }
+        List<Cookie> cookies = new ArrayList<>(cookiemap.values());
         return cookies;
     }
 
@@ -732,20 +722,16 @@ public class HttpClientToolUtils {
         httpPut.setConfig(requestConfig);
 
         for (String key : cookieMap.keySet()) {
-            httpPut.setHeader(key,cookieMap.get(key));
+            httpPut.setHeader(key, cookieMap.get(key));
         }
 
         CloseableHttpResponse httpResponse = null;
         try {
-            List<NameValuePair>list = new ArrayList<NameValuePair>();
-            httpPut.setEntity(new StringEntity(paramJsonStr,ContentType.APPLICATION_JSON));
-            httpResponse = httpClient.execute(httpPut,HttpClientContext.create());
+            httpPut.setEntity(new StringEntity(paramJsonStr, ContentType.APPLICATION_JSON));
+            httpResponse = httpClient.execute(httpPut, HttpClientContext.create());
             HttpEntity entity = httpResponse.getEntity();
             String result = EntityUtils.toString(entity);
             return result;
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

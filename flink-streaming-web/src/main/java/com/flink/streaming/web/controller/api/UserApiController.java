@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -186,7 +187,7 @@ public class UserApiController extends BaseController {
             }
             this.check(userSession.getName(), password, password);
             UserDTO user = userService.qyeryByUserId(userid);
-            if (user.getId() != userSession.getUserid()) {
+            if (!Objects.equals(user.getId(), userSession.getUserid())) {
                 return RestResult.error("不能修改非当前登录用户的密码！");
             }
             userService.updatePassword(userid, password, this.getUserName());
@@ -200,8 +201,8 @@ public class UserApiController extends BaseController {
     /**
      * 修改用户信息
      * 
-     * @param username
-     * @param name
+     * @param userid
+     * @param fullname
      * @return
      * @author wxj
      * @date 2021年12月1日 上午10:19:56 

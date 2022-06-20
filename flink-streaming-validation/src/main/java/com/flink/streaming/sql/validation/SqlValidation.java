@@ -5,10 +5,12 @@ import com.flink.streaming.common.enums.SqlCommand;
 import com.flink.streaming.common.model.SqlCommandCall;
 import com.flink.streaming.common.sql.SqlFileParser;
 import com.flink.streaming.sql.util.ValidationConstants;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.calcite.config.Lex;
 import org.apache.calcite.sql.parser.SqlParser;
@@ -44,20 +46,19 @@ public class SqlValidation {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         EnvironmentSettings settings = EnvironmentSettings.newInstance()
-            .useBlinkPlanner()
-            .inStreamingMode()
-            .build();
+                .inStreamingMode()
+                .build();
 
         TableEnvironment tEnv = StreamTableEnvironment.create(env, settings);
 
-        List<Operation> modifyOperationList=new ArrayList<>();
+        List<Operation> modifyOperationList = new ArrayList<>();
         Parser parser = ((TableEnvironmentInternal) tEnv).getParser();
-        Operation operation=null;
-        String  explainStmt=null;
+        Operation operation = null;
+        String explainStmt = null;
         try {
             for (String stmt : stmtList) {
-                explainStmt=stmt;
-                operation= parser.parse(stmt).get(0);
+                explainStmt = stmt;
+                operation = parser.parse(stmt).get(0);
                 log.info("operation={}", operation.getClass().getSimpleName());
                 switch (operation.getClass().getSimpleName()) {
                     //显示
@@ -81,8 +82,7 @@ public class SqlValidation {
                         String key = setOperation.getKey().get();
                         String value = setOperation.getValue().get();
                         Configuration configuration = tEnv.getConfig().getConfiguration();
-                        log.info("#############setConfiguration#############\n  key={} value={}",
-                            key, value);
+                        log.info("#############setConfiguration#############\n  key={} value={}", key, value);
                         configuration.setString(key, value);
                         break;
 
@@ -112,8 +112,8 @@ public class SqlValidation {
                     case "LoadModuleOperation":
                     case "UnloadModuleOperation":
                     case "NopOperation":
-                            ((TableEnvironmentInternal) tEnv)
-                            .executeInternal(parser.parse(stmt).get(0));
+                        ((TableEnvironmentInternal) tEnv)
+                                .executeInternal(parser.parse(stmt).get(0));
                         break;
                     case "CatalogSinkModifyOperation":
                         modifyOperationList.add(operation);
@@ -125,7 +125,7 @@ public class SqlValidation {
             if (modifyOperationList.size() > 0) {
                 ((TableEnvironmentInternal) tEnv).explainInternal(modifyOperationList);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.error("语法异常：  sql={}  原因是: ", explainStmt, e);
             throw new RuntimeException("语法异常   sql=" + explainStmt + "  原因:   " + e.getMessage());
         }
@@ -138,7 +138,6 @@ public class SqlValidation {
      * @author zhuhuipei
      * @date 2021/3/27
      * @time 10:10
-     *
      */
     @Deprecated
     public static void preCheckSql(List<String> sql) {

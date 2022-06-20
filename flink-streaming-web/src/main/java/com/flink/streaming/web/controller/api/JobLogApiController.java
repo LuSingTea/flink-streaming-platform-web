@@ -37,7 +37,7 @@ public class JobLogApiController extends BaseController {
     /**
      * 查询作业列表
      * 
-     * @param jobConfigParam
+     * @param jobRunLogParam
      * @return
      * @author wxj
      * @date 2021年12月1日 下午5:09:06 
@@ -46,7 +46,7 @@ public class JobLogApiController extends BaseController {
     @RequestMapping(value = "/logList", method = {RequestMethod.POST})
     public RestResult<?> listTask(JobRunLogParam jobRunLogParam) {
         PageModel<JobRunLogDTO> pageModel = jobRunLogService.queryJobRunLog(jobRunLogParam);
-        PageVO<PageModel<JobRunLogDTO>> pageVO = new PageVO<PageModel<JobRunLogDTO>>();
+        PageVO<PageModel<JobRunLogDTO>> pageVO = new PageVO<>();
         pageVO.setPageNum(pageModel.getPageNum());
         pageVO.setPages(pageModel.getPages());
         pageVO.setPageSize(pageModel.getPageSize());
@@ -59,7 +59,7 @@ public class JobLogApiController extends BaseController {
      * 查询日志详情
      * 
      * @param modelMap
-     * @param id
+     * @param logid
      * @return
      * @author wxj
      * @date 2021年12月14日 上午9:35:20 

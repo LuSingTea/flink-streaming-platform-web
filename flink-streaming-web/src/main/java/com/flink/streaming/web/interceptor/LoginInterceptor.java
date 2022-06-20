@@ -45,7 +45,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (WebUtil.isAjaxRequest(request)) {
             boolean nologin = (userSession == null) || (!userService.checkLogin(userSession));
             if (nologin) {
-                RestResult<Object> respdata = RestResult.newInstance(Constant.RESPONE_STATUS_UNAUTH, "未登录认证！", null);
+                RestResult respdata = RestResult.newInstance(Constant.RESPONE_STATUS_UNAUTH, "未登录认证！", null);
                 WebUtil.restResponseWithFlush(response, respdata);
                 return false;
             }

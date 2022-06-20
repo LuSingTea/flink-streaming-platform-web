@@ -192,7 +192,7 @@ public class JobConfigServiceImpl implements JobConfigService {
                 JobConfigStatus.STARTING.equals(jobConfigDTO.getStatus())) {
             throw new BizException("任务正在启动中或者正在运行，请先停止任务");
         }
-        if (YN.Y.getValue() == jobConfigDTO.getIsOpen().intValue()) {
+        if (YN.Y.getValue() == jobConfigDTO.getIsOpen()) {
             throw new BizException("请先关闭配置");
         }
         jobConfigMapper.deleteById(id, userName);
@@ -231,9 +231,7 @@ public class JobConfigServiceImpl implements JobConfigService {
             return Collections.emptyList();
         }
         List<Integer> statusList = new ArrayList<>();
-        for (Integer s : status) {
-            statusList.add(s);
-        }
+        Collections.addAll(statusList, status);
         return JobConfigDTO.toListDTO(jobConfigMapper.findJobConfigByStatus(statusList));
     }
 
@@ -260,7 +258,7 @@ public class JobConfigServiceImpl implements JobConfigService {
      * @time 22:43
      */
     private void checkSystemConfig(DeployModeEnum deployModeEnum) {
-        StringBuffer tips = new StringBuffer();
+        StringBuilder tips = new StringBuilder();
         String flinkHome = systemConfigService.getSystemConfigByKey(SysConfigEnum.FLINK_HOME.getKey());
         if (StringUtils.isEmpty(flinkHome)) {
             tips.append(" flinkHome、");

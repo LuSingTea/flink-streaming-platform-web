@@ -29,13 +29,13 @@ public class JobConfigAOImpl implements JobConfigAO {
     @Transactional(rollbackFor = Exception.class)
     public void addJobConfig(JobConfigDTO jobConfigDTO) {
         Long jobConfigId = jobConfigService.addJobConfig(jobConfigDTO);
-        jobAlarmConfigService.upSertBatchJobAlarmConfig(jobConfigDTO.getAlarmTypeEnumList(), jobConfigId);
+        jobAlarmConfigService.upSetBatchJobAlarmConfig(jobConfigDTO.getAlarmTypeEnumList(), jobConfigId);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateJobConfigById(JobConfigDTO jobConfigDTO) {
         jobConfigService.updateJobConfigByIdWithWriteHistory(jobConfigDTO);
-        jobAlarmConfigService.upSertBatchJobAlarmConfig(jobConfigDTO.getAlarmTypeEnumList(), jobConfigDTO.getId());
+        jobAlarmConfigService.upSetBatchJobAlarmConfig(jobConfigDTO.getAlarmTypeEnumList(), jobConfigDTO.getId());
     }
 }

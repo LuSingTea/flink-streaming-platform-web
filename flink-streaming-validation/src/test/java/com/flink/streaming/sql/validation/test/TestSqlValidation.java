@@ -16,7 +16,7 @@ import org.junit.Test;
  * @time 22:30
  */
 public class TestSqlValidation {
-    private static String test_sql_file = "/Users/edy/git/flink-streaming-platform-web/flink-streaming-core/src/test.sql";
+    private static String test_sql_file = "D:\\src-workplace\\flink-streaming-platform-web\\flink-streaming-core\\src\\test.sql";
 
     @Test
     public void checkSql() throws IOException {

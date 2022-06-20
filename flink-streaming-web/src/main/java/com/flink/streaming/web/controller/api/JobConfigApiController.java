@@ -34,8 +34,10 @@ import com.flink.streaming.web.service.SystemConfigService;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,7 +89,7 @@ public class JobConfigApiController extends BaseController {
     private SavepointBackupService savepointBackupService;
 
     @RequestMapping("/start")
-    public RestResult<String> start(Long id, Long savepointId) {
+    public RestResult start(Long id, Long savepointId) {
         try {
             this.getJobServerAO(id).start(id, savepointId, this.getUserName());
         } catch (BizException e) {
@@ -101,7 +103,7 @@ public class JobConfigApiController extends BaseController {
     }
 
     @RequestMapping("/stop")
-    public RestResult<String> stop(Long id) {
+    public RestResult stop(Long id) {
         try {
             this.getJobServerAO(id).stop(id, this.getUserName());
         } catch (BizException e) {
@@ -129,7 +131,7 @@ public class JobConfigApiController extends BaseController {
     }
 
     @RequestMapping("/open")
-    public RestResult<String> open(Long id) {
+    public RestResult open(Long id) {
         try {
             this.getJobServerAO(id).open(id, this.getUserName());
         } catch (BizException e) {
@@ -143,7 +145,7 @@ public class JobConfigApiController extends BaseController {
     }
 
     @RequestMapping("/delete")
-    public RestResult<String> delete(Long id) {
+    public RestResult delete(Long id) {
         try {
             jobConfigService.deleteJobConfigById(id, this.getUserName());
         } catch (BizException e) {
@@ -157,7 +159,7 @@ public class JobConfigApiController extends BaseController {
     }
 
     @RequestMapping("/savepoint")
-    public RestResult<String> savepoint(Long id) {
+    public RestResult savepoint(Long id) {
         try {
             this.getJobServerAO(id).savepoint(id);
         } catch (BizException e) {
@@ -285,7 +287,7 @@ public class JobConfigApiController extends BaseController {
      * 查询历史版本
      * 
      * @param modelMap
-     * @param jobConfigId
+     * @param jobConfigParam
      * @return
      * @author wxj
      * @date 2021年12月20日 上午11:07:22 
@@ -335,7 +337,7 @@ public class JobConfigApiController extends BaseController {
     @RequestMapping("/deployFlinkTask")
     public RestResult<?> deployFlinkTask(String deployConfigFile, String deployPath, String deployUser, String versionDesc) throws Exception {
         Yaml yaml = new Yaml();
-        try (InputStream in = new FileInputStream(deployConfigFile)) {
+        try (InputStream in = Files.newInputStream(Paths.get(deployConfigFile))) {
             DeployFlinkVO deploy = yaml.loadAs(in, DeployFlinkVO.class);
             int count = 0;
             for (FlinkTask task : deploy.getTaskList()) {
@@ -393,7 +395,7 @@ public class JobConfigApiController extends BaseController {
                 if (task.getId() == null) {
                     continue;
                 }
-                if (task.getDeployStartFlag() != null && task.getDeployStartFlag() == false) {
+                if (task.getDeployStartFlag() != null && !task.getDeployStartFlag()) {
                     continue;
                 }
                 JobConfigDTO job = jobConfigService.getJobConfigById(task.getId());
@@ -420,19 +422,19 @@ public class JobConfigApiController extends BaseController {
         if (list == null || list.size() == 0) {
             return null;
         }
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (AlarmTypeEnum alarmTypeEnum : list) {
-            result += (result.length() > 0 ? "," : "") + alarmTypeEnum.getCode();
+            result.append(result.length() > 0 ? "," : "").append(alarmTypeEnum.getCode());
         }
-        return result;
+        return result.toString();
     }
     
     private String readTextFile(String fileName) {
-        try (InputStream fin = new FileInputStream(fileName);) {
+        try (InputStream fin = Files.newInputStream(Paths.get(fileName))) {
             byte[] buffer = new byte[fin.available()];
             fin.read(buffer);
             fin.close();
-            String result = new String(buffer, "utf-8");
+            String result = new String(buffer, StandardCharsets.UTF_8);
             return result;
         } catch (Exception e) {
             log.error("读取文件[" + fileName + "]失败！", e);
@@ -470,7 +472,7 @@ public class JobConfigApiController extends BaseController {
         }
         // sql配置需要校验的参数JobType=null是兼容之前配置
         if (JobTypeEnum.SQL_STREAMING.equals(upsertJobConfigParam.getJobType()) || upsertJobConfigParam.getJobType() == null
-                || JobTypeEnum.SQL_STREAMING.getCode() == upsertJobConfigParam.getJobType().intValue()) {
+                || JobTypeEnum.SQL_STREAMING.getCode() == upsertJobConfigParam.getJobType()) {
             if (StringUtils.isEmpty(upsertJobConfigParam.getFlinkSql())) {
                 return RestResult.error("sql语句不能为空");
             }
@@ -590,7 +592,7 @@ public class JobConfigApiController extends BaseController {
         // 补充AlarmStrs字段
         List<AlarmTypeEnum> list = jobAlarmConfigService.findByJobId(jobConfigDTO.getId());
         if (CollectionUtil.isNotEmpty(list)) {
-            List<Integer> alarmTypes = new ArrayList<Integer>();
+            List<Integer> alarmTypes = new ArrayList<>();
             StringBuilder str = new StringBuilder("[");
             for (AlarmTypeEnum alarmTypeEnum : list) {
                 alarmTypes.add(alarmTypeEnum.getCode());
@@ -628,7 +630,7 @@ public class JobConfigApiController extends BaseController {
         if (pageModel == null || pageModel.size() == 0) {
             return;
         }
-        List<Long> jobIdList= pageModel.stream().map(jobConfigVO ->jobConfigVO.getId() ).collect(Collectors.toList());
+        List<Long> jobIdList= pageModel.stream().map(JobConfigDTO::getId).collect(Collectors.toList());
         Map<Long, List<AlarmTypeEnum>> map = jobAlarmConfigService.findByJobIdList(jobIdList);
         Map<DeployModeEnum, String> domainKey = new HashMap<>();
         domainKey.put(DeployModeEnum.YARN_PER, systemConfigService.getSystemConfigByKey(SysConfigEnum.YARN_RM_HTTP_ADDRESS.getKey()));
@@ -657,7 +659,7 @@ public class JobConfigApiController extends BaseController {
             // 补充AlarmStrs字段
             List<AlarmTypeEnum> list = map.get(jobConfigDTO.getId());
             if (CollectionUtil.isNotEmpty(list)) {
-                List<Integer> alarmTypes = new ArrayList<Integer>();
+                List<Integer> alarmTypes = new ArrayList<>();
                 StringBuilder str = new StringBuilder("[");
                 for (AlarmTypeEnum alarmTypeEnum : list) {
                     alarmTypes.add(alarmTypeEnum.getCode());

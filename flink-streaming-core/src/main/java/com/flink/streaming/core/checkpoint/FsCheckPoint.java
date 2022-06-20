@@ -65,12 +65,12 @@ public class FsCheckPoint {
             if (checkPointParam.getExternalizedCheckpointCleanup().
                     equalsIgnoreCase(ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION.name())) {
                 env.getCheckpointConfig()
-                        .enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION);
+                        .setExternalizedCheckpointCleanup(ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION);
                 log.info("本次使用DELETE_ON_CANCELLATION代表删除");
             } else if (checkPointParam.getExternalizedCheckpointCleanup().
                     equalsIgnoreCase(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION.name())) {
                 env.getCheckpointConfig()
-                        .enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
+                        .setExternalizedCheckpointCleanup(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
                 log.info("本次使用RETAIN_ON_CANCELLATION代表保留");
             }
         }
